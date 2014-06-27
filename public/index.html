@@ -15,7 +15,7 @@
 			<div  class = "unit-80 centered">
 				<h1>Download aquaponics data as CSV</h1>
 			</div>
-			<form id = "download_form" class = "forms">
+			<form id = "download_form" method = "get" action = "/csv_download" class = "forms">
 				<div class="units-row units-padding end">
 					<div  class = "unit-30 unit-push-10">
 						<label for = "from">
@@ -33,7 +33,7 @@
 						<select class = "width-100 btn" id = "sensor_name" name = "sensor_name">
 							<option value = "all">All sensors</option>
 							<option value = "qwerty">Qwerty</option>
-							<option value = "foo">Foo</option>
+							<option value = "foosensor">Foo</option>
 						</select>
 					</div>
 					<div  class = "unit-30 unit-push-10">
