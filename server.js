@@ -20,15 +20,23 @@ app.get('/csv_download', function(req, res){
 		api_url += '/'+query.sensor_name;
 	}	
 	var request = require('request');
-	request.get(api_url, function (error, api_res, body) {
+	var get_params = {
+		'from': query.from,
+		'to': query.to,
+	};
+	request.get({url: api_url, qs:get_params}, function (error, api_res, body) {
 		console.log("statusCode: ", api_res.statusCode);
 		console.log(body);
 		if (!error && api_res.statusCode == 200) {
+			console.log(query.sensor_name);
 			res.setHeader('Content-disposition', 'attachment; filename=todmorden-'+query.sensor_name+'.csv');
-			res.setHeader('Content-type', 'csv');
+			res.setHeader('Content-type', 'text/csv');
 			res.charset = 'UTF-8';
-			res.write(convert_to_csv(body));
+			var csv = convert_to_csv(body);
+			res.write(csv);
 			res.end();
+		} else {
+			console.log(error);
 		}
 	});
 });
