@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Aqua App</title>
+		<link rel="stylesheet" href="js/libs/jquery/jquery-ui.css" />
+		<link rel="stylesheet" href="css/kube.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="js/libs/jquery/jquery-1.11.1.js"></script>
+		<script src="js/libs/jquery/jquery-ui.js"></script>
+		<script src="js/csv-download.js"></script>
+	</head>
+	<body>
+		<div class="units-row units-padding">
+			<div  class = "unit-80 centered">
+				<h1>Download aquaponics data as CSV</h1>
+			</div>
+			<form id = "download_form" class = "forms">
+				<div class="units-row units-padding end">
+					<div  class = "unit-30 unit-push-10">
+						<label for = "from">
+							<input  placeholder="From" class = "width-100" type="text" id = "from" name = "from"/>
+						</label>
+					</div>	
+					<div  class = "unit-30 unit-push-10">
+						<label for = "to">
+							<input placeholder="To"  class = "width-100" type="text" id = "to" name = "to"/>
+						</label>
+					</div>	
+				</div>
+				<div class="units-row units-padding">		
+					<div  class = "unit-30 unit-push-10">
+						<select class = "width-100 btn" id = "sensor_name" name = "sensor_name">
+							<option value = "all">All sensors</option>
+							<option value = "qwerty">Qwerty</option>
+							<option value = "foo">Foo</option>
+						</select>
+					</div>
+					<div  class = "unit-30 unit-push-10">
+						<input  class = "width-100 btn btn-green" type = "submit" id = "download" value = "Download" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>
