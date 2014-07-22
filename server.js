@@ -43,9 +43,15 @@ app.get('/csv_download', function(req, res){
 function convert_to_csv(body) {
 	var json = JSON.parse(body);
 	var csv = "sensor name, date/time, reading\n";
-	for (var i = 0; i < json.rows.length; i++){
-		var row = json.rows[i];
-		csv += row.sensor_name+", "+date_format(row.reading_time)+", "+row.reading_value.toFixed(2)+"\n";
+	for (var i = 0; i < json.length; i++){
+		var row = json[i];
+		var value = row.reading_value;
+	        // round to 2 d.p. if it is a number
+                // but if it is a string leave it alone
+		if (typeof value === 'number') {
+			value = value.toFixed(2);
+		}
+		csv += row.sensor_name+", "+date_format(row.reading_time)+", "+value+"\n";
 	}
 	return csv;
 }
