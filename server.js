@@ -26,8 +26,12 @@ app.get('/csv_download', function(req, res){
 	};
 	request.get({url: api_url, qs:get_params}, function (error, api_res, body) {
 		if (!error && api_res.statusCode == 200) {
-			var sensor_name = query.sensor_name.replace(/ /g, '-');
-			console.log(sensor_name);
+                        var sensor_name;
+                        try {
+                            sensor_name = query.sensor_name.replace(/ /g, '-');
+                        } catch (e) {
+                            sensor_name = 'UNKNOWN';
+                        }
 			res.setHeader('Content-disposition', 'attachment; filename=todmorden-'+sensor_name+'.csv');
 			res.setHeader('Content-type', 'text/csv');
 			res.charset = 'UTF-8';
@@ -41,7 +45,13 @@ app.get('/csv_download', function(req, res){
 });
 
 function convert_to_csv(body) {
-	var json = JSON.parse(body);
+	// If it won't parse, just write the body
+        // so at least the user gets something and can debug
+	try {
+		var json = JSON.parse(body);
+	} catch (e) {
+		return body;
+	}
 	var csv = "sensor name, date/time, reading\n";
 	for (var i = 0; i < json.length; i++){
 		var row = json[i];
