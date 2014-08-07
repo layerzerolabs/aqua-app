@@ -16,23 +16,27 @@ app.get('/csv_download', function(req, res){
 	var url_parts = url.parse(req.url, true);
 	var query = url_parts.query;
 	var api_url = "http://localhost:8003/todmorden";
-	if (query.sensor_name != 'all') {
-		api_url += '/'+query.sensor_name;
-	}	
 	var request = require('request');
 	var get_params = {
 		'from': query.from,
 		'to': query.to,
-	};
+	};	
+    // "All" is a path parameter whereas an individual
+    // category is a query parameter.
+	if (query.category == 'all') {
+		api_url += '/all';
+	} else {
+	    get_params.category = query.category;
+	}
 	request.get({url: api_url, qs:get_params}, function (error, api_res, body) {
 		if (!error && api_res.statusCode == 200) {
                         var sensor_name;
                         try {
-                            sensor_name = query.sensor_name.replace(/ /g, '-');
+                            category = query.category.replace(/ /g, '-');
                         } catch (e) {
-                            sensor_name = 'UNKNOWN';
+                            category = 'UNKNOWN';
                         }
-			res.setHeader('Content-disposition', 'attachment; filename=todmorden-'+sensor_name+'.csv');
+			res.setHeader('Content-disposition', 'attachment; filename=todmorden-'+category+'.csv');
 			res.setHeader('Content-type', 'text/csv');
 			res.charset = 'UTF-8';
 			var csv = convert_to_csv(body);
@@ -45,34 +49,40 @@ app.get('/csv_download', function(req, res){
 });
 
 function convert_to_csv(body) {
-	// If it won't parse, just write the body
-        // so at least the user gets something and can debug
+	// If it won't parse (usually because it is an error message),
+    //  just write the body so at least the user has something to debug
 	try {
 		var json = JSON.parse(body);
 	} catch (e) {
 		return body;
 	}
-	var csv = "sensor name, date/time, reading\n";
+	var csv = "category, time, value\n";
 	for (var i = 0; i < json.length; i++){
 		var row = json[i];
-		var value = row.reading_value;
+		var value = row.value;
 	        // round to 2 d.p. if it is a number
                 // but if it is a string leave it alone
 		if (typeof value === 'number') {
 			value = value.toFixed(2);
 		}
-		csv += row.sensor_name+", "+date_format(row.reading_time)+", "+value+"\n";
+		csv += row.category+", "+date_format(row.time)+", "+value+"\n";
 	}
 	return csv;
 }
 
-// The string we get from the server is UTC.
-// This should localise as well as formatting.
 function date_format(timestamp) {
 	var date = new Date(timestamp);
+	// The string we get from the server is UTC.
 	return date.toLocaleString("en-GB").substring(4, 24);
 }
-var port = 80;
+
+var port;
+if (typeof process.argv[2] == 'undefined') {
+    port = 80;
+} else {
+    port = process.argv[2];
+}
+
 app.listen(port);
 console.log("Aqua App Server running on "+port);
 
