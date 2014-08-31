@@ -30,12 +30,12 @@ app.get('/csv_download', function(req, res){
 	}
 	request.get({url: api_url, qs:get_params}, function (error, api_res, body) {
 		if (!error && api_res.statusCode == 200) {
-                        var sensor_name;
-                        try {
-                            category = query.category.replace(/ /g, '-');
-                        } catch (e) {
-                            category = 'UNKNOWN';
-                        }
+            var sensor_name;
+            try {
+                category = query.category.replace(/ /g, '-');
+            } catch (e) {
+                category = 'UNKNOWN';
+            }
 			res.setHeader('Content-disposition', 'attachment; filename=todmorden-'+category+'.csv');
 			res.setHeader('Content-type', 'text/csv');
 			res.charset = 'UTF-8';
