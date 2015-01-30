@@ -1,23 +1,18 @@
-var express = require('express');
-var app = express();
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-};
+'use strict';
 
-app.use(allowCrossDomain);
+var app = require('./drywall').app;
 
 app.use(express.static(__dirname + '/public'));
 
 app.get('/csv_download', function(req, res){
-	var url = require('url');
-	var url_parts = url.parse(req.url, true);
-	var query = url_parts.query;
-	var api_url = "http://localhost:8003/todmorden";
+	
+  
+  var url = require('url');
+	var urlParts = url.parse(req.url, true);
+	var query = urlParts.query;
+	var apiUrl = 'http://localhost:8003/todmorden';
 	var request = require('request');
-	var get_params = {
+	var getParams = {
 		'from': query.from,
 		'to': query.to,
 	};	
