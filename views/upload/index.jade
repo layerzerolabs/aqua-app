@@ -21,10 +21,10 @@ block body
           button.close(type='button', data-dismiss='alert') &times;
           |<%- err %>
         |<% }); %>
-      div.form-group(class!='<%- errfor.sensor ? "has-error" : "" %>')
+      div.form-group(class!='<%- errfor.category ? "has-error" : "" %>')
         label Sensor:
-        input.form-control(type='text', name='sensor')
-        span.help-block <%- errfor.sensor %>
+        input.form-control(type='text', name='category')
+        span.help-block <%- errfor.category %>
       div.form-group(class!='<%- errfor.reading ? "has-error" : "" %>')
         label Reading:
         input.form-control(type='text', name='reading')
