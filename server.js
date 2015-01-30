@@ -1,7 +1,8 @@
 'use strict';
 
 var express = require('express');
-var app = require('./drywall').app;
+var drywall = require('./drywall');
+var app = drywall.app;
 
 app.use(express.static(__dirname + '/public'));
 
@@ -70,3 +71,5 @@ app.get('/csv_download', function(req, res){
 		}
 	});
 });
+
+drywall.start();
