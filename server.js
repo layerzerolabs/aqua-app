@@ -35,6 +35,9 @@ function convertToCsv(body) {
 	return csv;
 }
 
+app.all('/upload*', app.ensureAuthenticated);
+app.get('/upload/', require('/home/enduser/aqua-app/views/upload/index').init);
+
 app.get('/csv_download', function(req, res){
   var url = require('url');
 	var urlParts = url.parse(req.url, true);

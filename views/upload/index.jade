@@ -1,0 +1,33 @@
+extends ../../drywall/layouts/default
+
+block head
+  title Login
+
+block feet
+  script(src='/aquaviews/upload/index.min.js?#{cacheBreaker}')
+
+block body
+  div.row
+    div.col-sm-6
+      div.page-header
+        h1 Direct Upload
+      div#directUpload
+
+  script(type='text/template', id='tmpl-directUpload')
+    form
+      div.alerts
+        |<% _.each(errors, function(err) { %>
+        div.alert.alert-danger.alert-dismissable
+          button.close(type='button', data-dismiss='alert') &times;
+          |<%- err %>
+        |<% }); %>
+      div.form-group(class!='<%- errfor.sensor ? "has-error" : "" %>')
+        label Sensor:
+        input.form-control(type='text', name='sensor')
+        span.help-block <%- errfor.sensor %>
+      div.form-group(class!='<%- errfor.reading ? "has-error" : "" %>')
+        label Reading:
+        input.form-control(type='text', name='reading')
+        span.help-block <%- errfor.reading %>
+      div.form-actions
+        button.btn.btn-primary(type='button') Submit
