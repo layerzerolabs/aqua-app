@@ -39,7 +39,7 @@ app.get('/csv_download', function(req, res){
   var url = require('url');
 	var urlParts = url.parse(req.url, true);
 	var query = urlParts.query;
-	var apiUrl = 'http://localhost:8003/todmorden';
+	var apiUrl = 'http://incredibleaquagdn.no-ip.info:8003/todmorden';
 	var request = require('request');
   var category;
 	var getParams = {
