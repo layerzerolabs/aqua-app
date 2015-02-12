@@ -1,5 +1,6 @@
 /* global app:true, Backbone, _, $, document */
 
+
 (function() {
   'use strict';
 
@@ -31,7 +32,11 @@
     },
     render: function() {
       this.$el.html(this.template( this.model.attributes ));
-      this.$el.find('[name="field"]').focus();
+      this.$('[name="reading_time"]').datepicker({
+        clearBtn: true,
+        autoclose: true,
+        endDate: '+0h'
+      });
     },
     preventSubmit: function(event) {
       event.preventDefault();

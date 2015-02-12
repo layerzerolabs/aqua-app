@@ -22,12 +22,18 @@ block body
           |<%- err %>
         |<% }); %>
       div.form-group(class!='<%- errfor.category ? "has-error" : "" %>')
-        label Sensor:
+        label Category:
         input.form-control(type='text', name='category')
         span.help-block <%- errfor.category %>
-      div.form-group(class!='<%- errfor.reading ? "has-error" : "" %>')
-        label Reading:
-        input.form-control(type='text', name='reading')
-        span.help-block <%- errfor.reading %>
+      div.form-group(class!='<%- errfor.reading_value ? "has-error" : "" %>')
+        label Reading Value:
+        input.form-control(type='text', name='reading_value')
+        span.help-block <%- errfor.reading_value %>
+      div.form-group.input-append.date(class!='<%- errfor.reading_time ? "has-error" : "" %>')
+        label Reading Time:
+        input.form-control(type='text', name='reading_time')
+        span.add-on
+          i.icon-th
+        span.help-block <%- errfor.reading_time %>
       div.form-actions
         button.btn.btn-primary(type='button') Submit
