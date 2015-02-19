@@ -6,15 +6,11 @@
 
   app = app || {};
 
-  app.DirectUpload = Backbone.Model.extend({
-    url: '/directUpload/',
+  app.Reading = Backbone.Model.extend({
+    url: '/upload',
     defaults: {
-      success: false,
       errors: [],
-      errfor: {},
-      name: '',
-      email: '',
-      message: ''
+      errfor: []
     }
   });
 
@@ -22,11 +18,10 @@
     el: '#directUpload',
     template: _.template( $('#tmpl-directUpload').html() ),
     events: {
-      'submit form': 'preventSubmit',
-      'click .btn-directUpload': 'directUpload'
+      'submit form': 'uploadReading',
     },
     initialize: function() {
-      this.model = new app.DirectUpload();
+      this.model = new app.Reading();
       this.listenTo(this.model, 'sync', this.render);
       this.render();
     },
@@ -38,20 +33,18 @@
         endDate: '+0h'
       });
     },
-    preventSubmit: function(event) {
-      event.preventDefault();
-    },
-    contact: function() {
-      this.$el.find('.btn-directUpload').attr('disabled', true);
-
-      this.model.save({
-        name: this.$el.find('[name="field"]').val(),
-        email: this.$el.find('[name="value"]').val(),
-      });
+    uploadReading: function(e) {
+      e.preventDefault();
+      var json = _($('form').serializeArray()).reduce(function(obj, field) {
+        obj[field.name] = field.value;
+        return obj;
+      }, {});
+      console.log(json);
+      this.model.save(json);
     }
   });
 
   $(document).ready(function() {
-    app.directUploadView = new app.DirectUploadView();
+      app.directUploadView = new app.DirectUploadView();
   });
 }());

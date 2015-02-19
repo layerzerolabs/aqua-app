@@ -1,8 +1,11 @@
+/* jshint node: true */
+
 'use strict';
 
 var express = require('express');
 var drywall = require('./drywall');
 var app = drywall.app;
+app.api = require('./api');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -37,6 +40,7 @@ function convertToCsv(body) {
 
 app.all('/upload*', app.ensureAuthenticated);
 app.get('/upload/', require('/home/enduser/aqua-app/views/upload/index').init);
+app.post('/upload/', require('/home/enduser/aqua-app/views/upload/index').create);
 
 app.get('/csv_download', function(req, res){
   var url = require('url');
