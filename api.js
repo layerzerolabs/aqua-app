@@ -7,7 +7,12 @@ var apiUrl = settings.baseUrl + ':' + settings.port;
 var apiKeySuffix = '?api_key=' + settings.apiKey;
 
 module.exports.post = function(resourceUrl, data, callback) {
-  request.post(apiUrl + resourceUrl + apiKeySuffix, data, callback);
+  var options = {
+    uri: apiUrl + resourceUrl + apiKeySuffix,
+    method: 'POST',
+    json: data
+  };
+  request(options, callback);
 };
 
 
