@@ -6,7 +6,6 @@ var express = require('express');
 var drywall = require('./drywall');
 var app = drywall.app;
 app.api = require('./api');
-
 app.use(express.static(__dirname + '/public'));
 
 function formatDate(timestamp) {

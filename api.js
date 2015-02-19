@@ -1,12 +1,13 @@
 /* js hint node: true */
 
 var request = require('request');
+var settings = require('./api-settings');
 
-var baseUrl = 'http://localhost:8003';
-var apiKey = '';
+var apiUrl = settings.baseUrl + ':' + settings.port;
+var apiKeySuffix = '?api-key=' + settings.apiKey;
 
-module.exports.post = function(url, data, callback) {
-  request.post(baseUrl + url, data, callback);
+module.exports.post = function(resourceUrl, data, callback) {
+  request.post(apiUrl + resourceUrl + apiKeySuffix, data, callback);
 };
 
 

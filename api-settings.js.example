@@ -1,0 +1,6 @@
+var settings = {
+   baseUrl: 'http://localhost', //change to the api url in production
+   port: 8003,
+   apiKey: "your_api_key"
+};
+module.exports = settings;

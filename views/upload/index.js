@@ -13,6 +13,7 @@ exports.create = function(req, res){
       if (err) {
         workflow.emit('exception', err);
       } else {
+        console.log(body);
         body = JSON.parse(body);
         workflow.outcome.success = body.success;
         workflow.outcome.errors = body.errors;
