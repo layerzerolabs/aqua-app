@@ -1,4 +1,7 @@
 aqua-app
 ========
 
-Apps for accessing aquaponics data. Currently there is only one - a download app which gets the data in CSV format.
+Apps for accessing aquaponics data:
+
+1. Download app which gets the data in CSV format.
+2. Dashboard
